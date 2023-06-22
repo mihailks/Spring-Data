@@ -5,8 +5,10 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
-public class utils {
-
+enum P00_UtilConnection {
+    ;
+    private static final String CONNECTION_STRING = "jdbc:mysql://localhost:3306/";
+    private static final String DB_NAME = "minions_db";
     private static final String USERNAME = "root";
     private static final String PASSWORD = "root";
 
@@ -18,7 +20,7 @@ public class utils {
         props.setProperty("password", PASSWORD);
 
         return DriverManager
-                .getConnection("jdbc:mysql://localhost:3306/minions_db", props);
+                .getConnection(CONNECTION_STRING + DB_NAME, props);
     }
 
 }
