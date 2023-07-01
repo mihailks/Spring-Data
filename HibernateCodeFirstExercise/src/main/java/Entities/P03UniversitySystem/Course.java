@@ -1,10 +1,7 @@
 package Entities.P03UniversitySystem;
 
 import Entities.BaseEntity;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -19,6 +16,8 @@ public class Course extends BaseEntity {
     private LocalDate endDate;
     private Integer credits;
     private Set<Student> students;
+
+    private Teacher teacher;
 
     public Course() {
     }
@@ -79,5 +78,14 @@ public class Course extends BaseEntity {
 
     public void setStudents(Set<Student> students) {
         this.students = students;
+    }
+
+    @ManyToOne
+    public Teacher getTeacher() {
+        return teacher;
+    }
+
+    public void setTeacher(Teacher teacher) {
+        this.teacher = teacher;
     }
 }
