@@ -1,5 +1,6 @@
-package Entities;
+package Entities.P02SalesDatabase;
 
+import Entities.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;

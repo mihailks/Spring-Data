@@ -1,5 +1,6 @@
-package Entities;
+package Entities.P02SalesDatabase;
 
+import Entities.BaseEntity;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
@@ -12,7 +13,6 @@ public class Product extends BaseEntity {
     private String name;
     private Double quantity;
     private BigDecimal price;
-
     private Set<Sale> sales;
 
     public Product() {

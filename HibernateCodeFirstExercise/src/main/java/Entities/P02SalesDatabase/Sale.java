@@ -1,9 +1,9 @@
-package Entities;
+package Entities.P02SalesDatabase;
 
+import Entities.BaseEntity;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 @Entity
 @Table(name = "sales")

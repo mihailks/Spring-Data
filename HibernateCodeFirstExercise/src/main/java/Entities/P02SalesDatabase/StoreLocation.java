@@ -1,5 +1,6 @@
-package Entities;
+package Entities.P02SalesDatabase;
 
+import Entities.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
@@ -10,7 +11,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "store_locations")
-public class StoreLocation extends BaseEntity{
+public class StoreLocation extends BaseEntity {
     private String locationName;
     private Set<Sale> sales;
 
