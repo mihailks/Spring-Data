@@ -6,15 +6,15 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "users")
 @Inheritance(strategy = InheritanceType.JOINED)
-public abstract class User extends BaseEntity {
+public abstract class P03User extends BaseEntity {
     private String firstName;
     private String lastName;
     private String phoneNumber;
 
-    public User() {
+    public P03User() {
     }
 
-    public User(String firstName, String lastName, String phoneNumber) {
+    public P03User(String firstName, String lastName, String phoneNumber) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;

@@ -1,12 +1,10 @@
 package Entities.P06FootballBettingDatabase;
 
 import Entities.BaseEntity;
-import jakarta.persistence.Basic;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.math.BigDecimal;
+import java.util.Set;
 
 @Entity
 @Table(name = "teams")
@@ -14,10 +12,12 @@ public class Team extends BaseEntity {
     private String name;
     private String logo;
     private String Initials;
-    private String primaryKitColor;
-    private String secondaryKitColor;
-    private String town;
+    private Color primaryKitColor;
+    private Color secondaryKitColor;
+    private Town town;
     private BigDecimal budget;
+
+    private Set<Player> players;
 
     public Team() {
     }
@@ -49,30 +49,31 @@ public class Team extends BaseEntity {
         Initials = initials;
     }
 
-    @Column(name = "primary_kit_color")
-    public String getPrimaryKitColor() {
+    @OneToOne
+    @JoinColumn(name = "primary_kit_color")
+    public Color getPrimaryKitColor() {
         return primaryKitColor;
     }
 
-    public void setPrimaryKitColor(String primaryKitColor) {
+    public void setPrimaryKitColor(Color primaryKitColor) {
         this.primaryKitColor = primaryKitColor;
     }
-
-    @Column(name = "secondary_kit_color")
-    public String getSecondaryKitColor() {
+    @OneToOne
+    @JoinColumn(name = "secondary_kit_color")
+    public Color getSecondaryKitColor() {
         return secondaryKitColor;
     }
 
-    public void setSecondaryKitColor(String secondaryKitColor) {
+    public void setSecondaryKitColor(Color secondaryKitColor) {
         this.secondaryKitColor = secondaryKitColor;
     }
 
-    @Basic
-    public String getTown() {
+    @ManyToOne
+    public Town getTown() {
         return town;
     }
 
-    public void setTown(String town) {
+    public void setTown(Town town) {
         this.town = town;
     }
 
@@ -83,5 +84,14 @@ public class Team extends BaseEntity {
 
     public void setBudget(BigDecimal budget) {
         this.budget = budget;
+    }
+
+    @OneToMany
+    public Set<Player> getPlayers() {
+        return players;
+    }
+
+    public void setPlayers(Set<Player> players) {
+        this.players = players;
     }
 }

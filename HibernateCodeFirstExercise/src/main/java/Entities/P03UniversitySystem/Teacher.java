@@ -10,7 +10,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "teachers")
-public class Teacher extends User{
+public class Teacher extends P03User {
     private String email;
     private BigDecimal salaryPerHour;
     private Set<Course> courses;

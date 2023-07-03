@@ -10,7 +10,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "students")
-public class Student extends User{
+public class Student extends P03User {
     private Float averageGrade;
     private Integer attendance;
     private Set<Course> courses;

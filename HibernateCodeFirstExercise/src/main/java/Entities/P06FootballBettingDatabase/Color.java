@@ -1,7 +1,7 @@
 package Entities.P06FootballBettingDatabase;
 
 import Entities.BaseEntity;
-import jakarta.persistence.Basic;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 
@@ -12,7 +12,7 @@ public class Color extends BaseEntity {
 
     public Color(){}
 
-    @Basic
+    @Column(name = "name")
     public String getName() {
         return name;
     }
@@ -20,4 +20,6 @@ public class Color extends BaseEntity {
     public void setName(String name) {
         this.name = name;
     }
+
+
 }
