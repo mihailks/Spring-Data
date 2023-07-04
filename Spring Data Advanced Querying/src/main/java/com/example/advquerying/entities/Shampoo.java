@@ -1,4 +1,5 @@
 package com.example.advquerying.entities;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Set;
@@ -44,7 +45,7 @@ public class Shampoo extends BaseEntity {
         this.size = size;
     }
 
-    @ManyToOne(optional = true, cascade = CascadeType.ALL,
+    @ManyToOne(
             fetch = FetchType.EAGER)
     @JoinColumn(name = "label", referencedColumnName = "id")
     public Label getLabel() {
@@ -55,7 +56,7 @@ public class Shampoo extends BaseEntity {
         this.label = label;
     }
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "shampoos_ingredients",
             joinColumns = @JoinColumn(name = "shampoo_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "ingredient_id", referencedColumnName = "id"))
@@ -65,5 +66,17 @@ public class Shampoo extends BaseEntity {
 
     public void setIngredients(Set<Ingredient> ingredients) {
         this.ingredients = ingredients;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Shampoo{" +
+                "brand='" + brand + '\'' +
+                ", price=" + price +
+                ", size=" + size +
+                ", label=" + label +
+                ", ingredients=" + ingredients +
+                '}';
     }
 }
