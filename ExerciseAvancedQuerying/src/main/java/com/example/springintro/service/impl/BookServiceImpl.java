@@ -7,6 +7,7 @@ import com.example.springintro.service.BookService;
 import com.example.springintro.service.CategoryService;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.nio.file.Files;
@@ -69,7 +70,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public List<String> findAllBooksByAuthorFirstAndLastNameOrderByReleaseDate(String firstName, String lastName) {
-       return bookRepository
+        return bookRepository
                 .findAllByAuthor_FirstNameAndAuthor_LastNameOrderByReleaseDateDescTitle(firstName, lastName)
                 .stream()
                 .map(book -> String.format("%s %s %d",
@@ -77,6 +78,113 @@ public class BookServiceImpl implements BookService {
                         book.getReleaseDate(),
                         book.getCopies()))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<String> printAllBooksByAgeRestriction(AgeRestriction input) {
+        return bookRepository.findBookByAgeRestriction(input)
+                .stream()
+                .map(Book::getTitle)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<String> findAllGoldenBooks() {
+        return bookRepository.findAllByEditionTypeAndCopiesLessThan(EditionType.GOLD, 5000)
+                .stream()
+                .map(Book::getTitle)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<String> findAllBooksInPriceRange() {
+        return bookRepository.findAllByPriceLessThanOrPriceGreaterThan(BigDecimal.valueOf(5), BigDecimal.valueOf(40))
+                .stream()
+                .map(book -> String.format("%s - $%.2f",
+                        book.getTitle(),
+                        book.getPrice()))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<String> findAllNotReleasedBooks(int year) {
+        LocalDate lower = LocalDate.of(year, 1, 1);
+        LocalDate upper = LocalDate.of(year, 12, 31);
+
+
+        return bookRepository.findByReleaseDateLessThanOrReleaseDateGreaterThan(lower, upper)
+                .stream()
+                .map(Book::getTitle)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<String> findAllBooksBeforeDate(LocalDate localDate) {
+        return bookRepository.findAllByReleaseDateBefore(localDate)
+                .stream()
+                .map(book -> String.format("%s %s %.2f",
+                        book.getTitle(),
+                        book.getEditionType(),
+                        book.getPrice()))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<String> findAllBooksTitleContains(String input) {
+        return bookRepository.findByTitleIsContainingIgnoreCase(input)
+                .stream()
+                .map(Book::getTitle)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<String> findAllBookTitlesSearchByAuthorNameContains(String input) {
+        return bookRepository.findBookByAuthor_LastNameStartsWith(input)
+                .stream()
+                .map(book -> String.format("%s (%s %s)",
+                        book.getTitle(),
+                        book.getAuthor().getFirstName(),
+                        book.getAuthor().getLastName()))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public int printAllBooksTitleLongerThenNumber(int minLength) {
+        return bookRepository.findAllBooksTitleLongerThenInput(minLength);
+    }
+
+    @Override
+    public void changeBookPrice(long book_id) {
+        bookRepository.ChangeBookPriceById(book_id);
+    }
+
+    @Override
+    @Transactional
+    public int increaseCopiesByDate(LocalDate localDate, int copies) {
+        int affectedRows = bookRepository.updateCopiesByReleaseDate(copies, localDate);
+
+        return affectedRows * copies;
+
+    }
+
+    @Override
+    public List<String> findAndReduceInfoForBook(String title) {
+        return bookRepository.findBookByTitle(title)
+                .stream()
+                .map(book -> String.format("%s %s %s %.2f"
+                        , book.getTitle(),
+                        book.getEditionType(),
+                        book.getAgeRestriction(),
+                        book.getPrice()))
+                .collect(Collectors.toList());
+
+    }
+
+    @Override
+    @Transactional
+    public int RemoveBooksWithFewerCopiesThen(int copies) {
+        return bookRepository.deleteBookByCopiesLessThan(copies);
+
     }
 
     private Book createBookFromInfo(String[] bookInfo) {
