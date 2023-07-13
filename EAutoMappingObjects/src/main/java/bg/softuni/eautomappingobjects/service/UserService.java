@@ -10,4 +10,11 @@ public interface UserService {
 
     void logOutUser();
 
+    boolean hasLoggedInUser();
+
+    boolean loggedInUserIsAdmin();
+
+    void viewOwnedGames();
+
+    void purchaseGame(String title);
 }

@@ -51,7 +51,7 @@ public class User extends BaseEntity {
     public void setGames(Set<Game> games) {
         this.games = games;
     }
-    @Column(columnDefinition = "default 'false'")
+    @Column
     public Boolean getIsAdmin() {
         return isAdmin;
     }

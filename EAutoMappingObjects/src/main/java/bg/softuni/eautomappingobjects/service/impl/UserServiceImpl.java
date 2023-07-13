@@ -2,7 +2,9 @@ package bg.softuni.eautomappingobjects.service.impl;
 
 import bg.softuni.eautomappingobjects.model.dto.UserLogInDTO;
 import bg.softuni.eautomappingobjects.model.dto.UserRegisterDTO;
+import bg.softuni.eautomappingobjects.model.entity.Game;
 import bg.softuni.eautomappingobjects.model.entity.User;
+import bg.softuni.eautomappingobjects.repository.GameRepository;
 import bg.softuni.eautomappingobjects.repository.UserRepository;
 import bg.softuni.eautomappingobjects.service.UserService;
 import bg.softuni.eautomappingobjects.util.ValidationUtil;
@@ -21,10 +23,13 @@ public class UserServiceImpl implements UserService {
     private final ValidationUtil validationUtil;
     private User loggedInUser;
 
-    public UserServiceImpl(UserRepository userRepository, ModelMapper modelMapper, ValidationUtil validationUtil) {
+    private final GameRepository gameRepository;
+
+    public UserServiceImpl(UserRepository userRepository, ModelMapper modelMapper, ValidationUtil validationUtil, GameRepository gameRepository) {
         this.userRepository = userRepository;
         this.modelMapper = modelMapper;
         this.validationUtil = validationUtil;
+        this.gameRepository = gameRepository;
     }
 
 
@@ -81,11 +86,32 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void logOutUser() {
-        if (loggedInUser == null) {
+        if (!hasLoggedInUser()) {
             System.out.println("Cannot log out. No user was logged in.");
         } else {
             loggedInUser = null;
         }
+
+    }
+
+    @Override
+    public boolean hasLoggedInUser() {
+        return loggedInUser != null;
+    }
+
+    @Override
+    public boolean loggedInUserIsAdmin() {
+        return loggedInUser.getIsAdmin();
+    }
+
+    @Override
+    public void viewOwnedGames() {
+
+    }
+
+    @Override
+    public void purchaseGame(String title) {
+        Game gameToPurchase = gameRepository.findFirstByTitle(title);
 
     }
 }
