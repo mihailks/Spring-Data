@@ -1,26 +1,20 @@
 package bg.softuni.exercisexmlprocessing.model.DTO;
 
-import com.google.gson.annotations.Expose;
-import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
+import jakarta.xml.bind.annotation.*;
 
 import java.math.BigDecimal;
 
+@XmlRootElement(name = "product")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class ProductSeedDTO {
-    @Expose
+
+    @XmlElement(name = "name")
     private String name;
-    @Expose
+    @XmlElement(name = "price")
     private BigDecimal price;
 
-    public ProductSeedDTO() {
-    }
-
-    public ProductSeedDTO(String name, BigDecimal price) {
-        this.name = name;
-        this.price = price;
-    }
-
-    @Size(min = 3)
+    @Size(min = 3, max = 15)
     public String getName() {
         return name;
     }
@@ -29,7 +23,6 @@ public class ProductSeedDTO {
         this.name = name;
     }
 
-    @Positive
     public BigDecimal getPrice() {
         return price;
     }

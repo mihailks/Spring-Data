@@ -1,24 +1,22 @@
 package bg.softuni.exercisexmlprocessing.model.DTO;
 
-import com.google.gson.annotations.Expose;
 import jakarta.validation.constraints.Size;
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlAttribute;
+import jakarta.xml.bind.annotation.XmlRootElement;
 
+@XmlRootElement(name = "user")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class UserSeedDTO {
-    @Expose
+
+    @XmlAttribute(name = "first-name")
     private String firstName;
-    @Expose
+    @XmlAttribute(name = "last-name")
     private String lastName;
-    @Expose
+    @XmlAttribute(name = "age")
     private Integer age;
 
-    public UserSeedDTO() {
-    }
-
-    public UserSeedDTO(String firstName, String lastName, Integer age) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.age = age;
-    }
 
     public String getFirstName() {
         return firstName;

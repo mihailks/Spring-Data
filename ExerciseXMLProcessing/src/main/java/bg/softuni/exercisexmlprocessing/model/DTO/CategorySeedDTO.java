@@ -1,14 +1,15 @@
 package bg.softuni.exercisexmlprocessing.model.DTO;
 
-import com.google.gson.annotations.Expose;
 import jakarta.validation.constraints.Size;
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlRootElement;
 
+@XmlRootElement(name = "category")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class CategorySeedDTO {
-    @Expose
+    //    @XmlElement(name = "name")
     private String name;
-
-    public CategorySeedDTO() {
-    }
 
     @Size(min = 3, max = 15)
     public String getName() {
