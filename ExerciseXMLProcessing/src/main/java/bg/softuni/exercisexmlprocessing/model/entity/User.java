@@ -1,4 +1,4 @@
-package bg.softuni.exercisejsonprocessing.model.entity;
+package bg.softuni.exercisexmlprocessing.model.entity;
 
 import jakarta.persistence.*;
 

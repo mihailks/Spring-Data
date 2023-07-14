@@ -1,5 +1,6 @@
 package bg.softuni.exercisejsonprocessing.servise.impl;
 
+import bg.softuni.exercisejsonprocessing.model.DTO.ProductNameAndPriceDTO;
 import bg.softuni.exercisejsonprocessing.model.DTO.ProductSeedDTO;
 import bg.softuni.exercisejsonprocessing.model.entity.Product;
 import bg.softuni.exercisejsonprocessing.repository.ProductsRepository;
@@ -16,6 +17,8 @@ import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static bg.softuni.exercisejsonprocessing.constanst.GlobalConstants.RESOURCES_FILE_PATH;
 
@@ -41,7 +44,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void seedProducts() throws IOException {
-        if (productsRepository.count()>0){
+        if (productsRepository.count() > 0) {
             return;
         }
 
@@ -58,7 +61,7 @@ public class ProductServiceImpl implements ProductService {
                 .map(productSeedDTO -> {
                     Product product = modelMapper.map(productSeedDTO, Product.class);
                     product.setSeller(userService.findRandomUser());
-                    if (product.getPrice().compareTo(BigDecimal.valueOf(500L)) > 0) {
+                    if (product.getPrice().compareTo(BigDecimal.valueOf(900L)) > 0) {
                         product.setBuyer(userService.findRandomUser());
                     }
 
@@ -70,6 +73,24 @@ public class ProductServiceImpl implements ProductService {
                 .forEach(productsRepository::save);
 
 
+    }
+
+    @Override
+    public List<ProductNameAndPriceDTO> findAllProductInRangeOrderByPrice(BigDecimal lower, BigDecimal upper) {
+        return productsRepository
+                .findAllByPriceBetweenAndBuyerIsNullOrderByPriceDesc(lower, upper)
+                .stream()
+                .map(product -> {
+                    ProductNameAndPriceDTO productNameAndPriceDTO = modelMapper
+                            .map(product, ProductNameAndPriceDTO.class);
+
+                    productNameAndPriceDTO.setSeller(String.format("%s %s",
+                            product.getSeller().getFirstName(),
+                            product.getSeller().getLastName()));
+
+                    return productNameAndPriceDTO;
+                })
+                .collect(Collectors.toList());
     }
 }
 
