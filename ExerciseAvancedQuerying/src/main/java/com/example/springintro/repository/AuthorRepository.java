@@ -19,8 +19,8 @@ public interface AuthorRepository extends JpaRepository<Author, Long> {
 
     @Procedure("select_books_written_by_the_author")
             //FIXME: PROBLEM WITH THE PARAMETERS
-//    int countBooksByTheSameAuthor(@Param(value = "first_name") String firstName, @Param(value = "last_name") String lastName);
-    int countBooksByTheSameAuthor(String firstName, String lastName);
+int countBooksByTheSameAuthor(@Param(value = "first_name") String firstName, @Param(value = "last_name") String lastName);
+//    int countBooksByTheSameAuthor(String firstName, String lastName);
 
 
 }

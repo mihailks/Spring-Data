@@ -11,7 +11,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -98,7 +97,6 @@ public class GameServiceImpl implements GameService {
     @Override
     public void viewAllGames() {
         gameRepository.findAll()
-                .stream()
                 .forEach(game ->
                         System.out.printf("%s %.2f%n", game.getTitle(), game.getPrice()));
     }

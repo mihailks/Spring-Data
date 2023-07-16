@@ -21,4 +21,14 @@ public interface UserRepository extends JpaRepository<User, Long> {
 //        " order by u.lastName,u.firstName")
     List<User> findAllUsersWithMoreThenProductsSoldOrderByLastNameFirstName();
 
+
+        @Query("select u from User u " +
+                "join u.soldProducts p " +
+                "where p.buyer is not null " +
+                "order by size(u.soldProducts) desc, u.lastName ")
+        List<User> findUserBySoldProducts();
+
+
+
+
 }

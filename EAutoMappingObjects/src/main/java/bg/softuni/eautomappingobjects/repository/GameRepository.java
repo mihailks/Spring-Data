@@ -9,8 +9,6 @@ import java.util.Optional;
 
 @Repository
 public interface GameRepository extends JpaRepository<Game, Long> {
-    @Override
-    List<Game> findAll();
 
     Game findFirstByTitle(String title);
 }

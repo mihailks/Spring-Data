@@ -1,6 +1,8 @@
 package bg.softuni.exercisejsonprocessing;
 
+import bg.softuni.exercisejsonprocessing.model.DTO.CategoryProductCountDTO;
 import bg.softuni.exercisejsonprocessing.model.DTO.ProductNameAndPriceDTO;
+import bg.softuni.exercisejsonprocessing.model.DTO.Q4.UserCountDTO;
 import bg.softuni.exercisejsonprocessing.model.DTO.UserSoldDTO;
 import bg.softuni.exercisejsonprocessing.servise.CategoryService;
 import bg.softuni.exercisejsonprocessing.servise.ProductService;
@@ -21,6 +23,8 @@ public class CommandLineRunner implements org.springframework.boot.CommandLineRu
     private static final String OUTPUT_FILES_PATH = "src/main/resources/files/out/";
     public static final String PRODUCT_IN_RANGE_FILE_NAME = "products-in-range.json";
     public static final String PRODUCT_SOLD_FILE_NAME = "products-sold.json";
+    public static final String PRODUCT_COUNT_FILE_NAME = "products-count.json";
+    public static final String USERS_PRODUCTS_FILE_NAME = "users-products.json";
     private CategoryService categoryService;
     private UserService userService;
     private ProductService productService;
@@ -45,9 +49,24 @@ public class CommandLineRunner implements org.springframework.boot.CommandLineRu
         switch (task) {
             case 1 -> productsInRange();
             case 2 -> soldProducts();
+            case 3 -> categoriesByProductCount();
+            case 4 -> UsersAndProducts();
         }
 
     }
+
+    private void UsersAndProducts() {
+        List<UserCountDTO> userSoldDTOs =
+                userService.countUserByProductSold();
+    }
+
+    private void categoriesByProductCount() throws IOException {
+        List<CategoryProductCountDTO> categoryProductCountDTOs =
+                categoryService.countCategories();
+        String content = gson.toJson(categoryProductCountDTOs);
+        writeToFile(OUTPUT_FILES_PATH + PRODUCT_COUNT_FILE_NAME, content);
+    }
+
 
     private void soldProducts() throws IOException {
         List<UserSoldDTO> userSoldDTOS = userService.findAllUsersWithMoreThenProductsSold();

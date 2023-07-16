@@ -1,5 +1,6 @@
 package bg.softuni.exercisejsonprocessing.servise.impl;
 
+import bg.softuni.exercisejsonprocessing.model.DTO.CategoryProductCountDTO;
 import bg.softuni.exercisejsonprocessing.model.DTO.CategorySeedDTO;
 import bg.softuni.exercisejsonprocessing.model.entity.Category;
 import bg.softuni.exercisejsonprocessing.repository.CategoryRepository;
@@ -12,10 +13,9 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.stream.Collectors;
 
 import static bg.softuni.exercisejsonprocessing.constanst.GlobalConstants.RESOURCES_FILE_PATH;
 
@@ -66,6 +66,11 @@ public class CategoryServiceImpl implements CategoryService {
             categorySet.add(categoryRepository.findById(randomId).orElse(null));
         }
         return categorySet;
+    }
+
+    @Override
+    public List<CategoryProductCountDTO> countCategories() {
+        return categoryRepository.findAllByNumberOfProducts();
     }
 
 

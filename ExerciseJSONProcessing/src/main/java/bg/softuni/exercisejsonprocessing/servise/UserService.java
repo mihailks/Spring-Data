@@ -1,5 +1,6 @@
 package bg.softuni.exercisejsonprocessing.servise;
 
+import bg.softuni.exercisejsonprocessing.model.DTO.Q4.UserCountDTO;
 import bg.softuni.exercisejsonprocessing.model.DTO.UserSoldDTO;
 import bg.softuni.exercisejsonprocessing.model.entity.User;
 
@@ -13,4 +14,6 @@ public interface UserService {
 
 
     List<UserSoldDTO> findAllUsersWithMoreThenProductsSold();
+
+    List<UserCountDTO> countUserByProductSold();
 }

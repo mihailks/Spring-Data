@@ -2,6 +2,8 @@ package bg.softuni.exercisejsonprocessing.servise.impl;
 
 import bg.softuni.exercisejsonprocessing.constanst.GlobalConstants;
 import bg.softuni.exercisejsonprocessing.model.DTO.CategorySeedDTO;
+import bg.softuni.exercisejsonprocessing.model.DTO.Q4.UserAndProductsDTO;
+import bg.softuni.exercisejsonprocessing.model.DTO.Q4.UserCountDTO;
 import bg.softuni.exercisejsonprocessing.model.DTO.UserSeedDTO;
 import bg.softuni.exercisejsonprocessing.model.DTO.UserSoldDTO;
 import bg.softuni.exercisejsonprocessing.model.entity.Category;
@@ -79,5 +81,20 @@ public class UserServiceImpl implements UserService {
                 .stream()
                 .map(user -> modelMapper.map(user, UserSoldDTO.class))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<UserCountDTO> countUserByProductSold() {
+
+        List<User> users = userRepository.findUserBySoldProducts();
+//
+//        List<UserAndProductsDTO> userAndProductsDTOs =
+//                users
+//                        .stream()
+//                        .map(u->{
+//                            UserAndProductsDTO user = modelMapper.map(u, UserAndProductsDTO.class);
+//                            u.getSoldProducts()
+//                        })
+        return null;
     }
 }
