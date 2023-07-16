@@ -1,5 +1,7 @@
 package bg.softuni.exercisexmlprocessing.servise.impl;
 
+import bg.softuni.exercisexmlprocessing.model.DTO.Q2.UserWithProductsDTO;
+import bg.softuni.exercisexmlprocessing.model.DTO.Q2.UsersViewRootDTO;
 import bg.softuni.exercisexmlprocessing.model.DTO.UserSeedDTO;
 import bg.softuni.exercisexmlprocessing.model.entity.User;
 import bg.softuni.exercisexmlprocessing.repository.UserRepository;
@@ -10,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -43,5 +46,19 @@ public class UserServiceImpl implements UserService {
 
 
         return userRepository.findById(randomId).orElse(null);
+    }
+
+    @Override
+    public UsersViewRootDTO findUsersWithMoreThenOneSoldProduct() {
+        UsersViewRootDTO usersViewRootDTO = new UsersViewRootDTO();
+
+        usersViewRootDTO
+                .setProducts(userRepository
+                        .findAllBySoldProductsIsNotNullOrderByLastNameAscFirstName()
+                        .stream()
+                        .map(user -> modelMapper.map(user, UserWithProductsDTO.class))
+                        .collect(Collectors.toList()));
+
+        return usersViewRootDTO;
     }
 }

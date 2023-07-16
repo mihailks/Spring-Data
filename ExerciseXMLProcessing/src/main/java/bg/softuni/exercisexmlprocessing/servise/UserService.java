@@ -1,5 +1,6 @@
 package bg.softuni.exercisexmlprocessing.servise;
 
+import bg.softuni.exercisexmlprocessing.model.DTO.Q2.UsersViewRootDTO;
 import bg.softuni.exercisexmlprocessing.model.DTO.UserSeedDTO;
 import bg.softuni.exercisexmlprocessing.model.entity.User;
 
@@ -11,4 +12,6 @@ public interface UserService {
     void seedUsers(List<UserSeedDTO> users);
 
     User getRandomUser();
+
+    UsersViewRootDTO findUsersWithMoreThenOneSoldProduct();
 }
