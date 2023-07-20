@@ -65,4 +65,9 @@ public class SellerServiceImpl implements SellerService {
 
         return stringBuilder.toString().trim();
     }
+
+    @Override
+    public Seller findById(Long id) {
+        return sellerRepository.findById(id).orElse(null);
+    }
 }

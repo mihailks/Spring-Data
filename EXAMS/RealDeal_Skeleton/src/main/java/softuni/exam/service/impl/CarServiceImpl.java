@@ -77,6 +77,23 @@ public class CarServiceImpl implements CarService {
 
     @Override
     public String getCarsOrderByPicturesCountThenByMake() {
-        return null;
+        StringBuilder stringBuilder = new StringBuilder();
+
+        carRepository.findAllByOrderedByPicturesCountAndName()
+                .forEach(car -> {
+                    stringBuilder.append(String.format("Car make - %s, model - %s%n",
+                                    car.getMake(), car.getModel()))
+                            .append(String.format("\tKilometers - %s%n", car.getKilometers()))
+                            .append(String.format("\tRegistered on - %s%n", car.getRegisteredOn()))
+                            .append(String.format("\tNumber of pictures - %s%n", car.getPictures().size()))
+                            .append(System.lineSeparator());
+                });
+
+        return stringBuilder.toString().trim();
+    }
+
+    @Override
+    public Car findById(Long id) {
+        return carRepository.findById(id).orElse(null);
     }
 }
