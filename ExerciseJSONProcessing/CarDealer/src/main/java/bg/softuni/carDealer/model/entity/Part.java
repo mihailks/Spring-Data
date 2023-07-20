@@ -1,8 +1,6 @@
 package bg.softuni.carDealer.model.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 
@@ -13,15 +11,18 @@ public class Part extends BaseEntity{
     private String name;
     private BigDecimal price;
     private Integer quantity;
+    private Supplier supplier;
 
     public Part() {
     }
 
-    public Part(String name, BigDecimal price, Integer quantity) {
+    public Part(String name, BigDecimal price, Integer quantity, Supplier supplier) {
         this.name = name;
         this.price = price;
         this.quantity = quantity;
+        this.supplier = supplier;
     }
+
     @Column(name = "name")
     public String getName() {
         return name;
@@ -45,5 +46,14 @@ public class Part extends BaseEntity{
 
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
+    }
+
+    @OneToOne
+    public Supplier getSupplier() {
+        return supplier;
+    }
+
+    public void setSupplier(Supplier supplier) {
+        this.supplier = supplier;
     }
 }

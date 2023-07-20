@@ -1,9 +1,6 @@
 package bg.softuni.carDealer.model.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.util.List;
 
@@ -50,7 +47,7 @@ public class Car extends BaseEntity {
         this.traveledDistance = traveledDistance;
     }
 
-    @OneToMany
+    @ManyToMany
     public List<Part> getParts() {
         return parts;
     }
