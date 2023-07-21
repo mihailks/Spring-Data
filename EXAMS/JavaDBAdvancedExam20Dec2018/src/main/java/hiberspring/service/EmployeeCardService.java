@@ -13,5 +13,5 @@ public interface EmployeeCardService {
 
     String importEmployeeCards(String employeeCardsFileContent) throws IOException;
 
-    Optional<EmployeeCard> findByCardNumber(String card);
+    Optional<EmployeeCard> findByNumber(String card);
 }

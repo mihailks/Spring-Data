@@ -107,7 +107,7 @@ public class ImportController extends BaseController {
     }
 
     @PostMapping("/employees")
-    public ModelAndView importEmployeesConfirm() throws JAXBException {
+    public ModelAndView importEmployeesConfirm() throws JAXBException, FileNotFoundException {
         System.out.println(this.employeeService.importEmployees());
 
         return super.redirect("/import/xml");

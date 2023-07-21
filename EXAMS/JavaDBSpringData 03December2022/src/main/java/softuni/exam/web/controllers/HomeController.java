@@ -4,21 +4,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
-import softuni.exam.service.MechanicService;
-import softuni.exam.service.PartService;
-import softuni.exam.service.TaskService;
-import softuni.exam.service.CarService;
+import softuni.exam.service.MechanicsService;
+import softuni.exam.service.PartsService;
+import softuni.exam.service.TasksService;
+import softuni.exam.service.CarsService;
 
 @Controller
 public class HomeController extends BaseController {
 
-    private final PartService partService;
-    private final TaskService taskService;
-    private final CarService carService;
-    private final MechanicService mechanicService;
+    private final PartsService partService;
+    private final TasksService taskService;
+    private final CarsService carService;
+    private final MechanicsService mechanicService;
 
     @Autowired
-    public HomeController(PartService partService, TaskService taskService, CarService carService, MechanicService mechanicService) {
+    public HomeController(PartsService partService, TasksService taskService, CarsService carService, MechanicsService mechanicService) {
         this.partService = partService;
         this.taskService = taskService;
         this.carService = carService;

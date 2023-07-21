@@ -6,10 +6,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
-import softuni.exam.service.PartService;
-import softuni.exam.service.TaskService;
-import softuni.exam.service.MechanicService;
-import softuni.exam.service.CarService;
+import softuni.exam.service.PartsService;
+import softuni.exam.service.TasksService;
+import softuni.exam.service.MechanicsService;
+import softuni.exam.service.CarsService;
 
 import javax.xml.bind.JAXBException;
 import java.io.FileNotFoundException;
@@ -19,13 +19,13 @@ import java.io.IOException;
 @RequestMapping("/import")
 public class ImportController extends BaseController {
 
-    private final PartService partService;
-    private final TaskService taskService;
-    private final MechanicService mechanicService;
-    private final CarService carService;
+    private final PartsService partService;
+    private final TasksService taskService;
+    private final MechanicsService mechanicService;
+    private final CarsService carService;
 
     @Autowired
-    public ImportController(PartService partService, TaskService taskService, MechanicService mechanicService, CarService carService) {
+    public ImportController(PartsService partService, TasksService taskService, MechanicsService mechanicService, CarsService carService) {
         this.partService = partService;
         this.taskService = taskService;
         this.mechanicService = mechanicService;

@@ -1,45 +1,43 @@
 package softuni.exam.models.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "parts")
-public class Part extends BaseEntity{
-        private String name;
-        private Double price;
-        private Integer quantity;
+public class Part extends BaseEntity {
+    private String partName;
+    private Double price;
+    private Integer quantity;
 
-        public Part() {
-        }
+    public Part() {
+    }
 
-        public Part(String name, Double price, Integer quantity) {
-                this.name = name;
-                this.price = price;
-                this.quantity = quantity;
-        }
+    @Column(name = "part_name", nullable = false, unique = true)
+    public String getPartName() {
+        return partName;
+    }
 
-        public String getName() {
-                return name;
-        }
+    public void setPartName(String partName) {
+        this.partName = partName;
+    }
 
-        public void setName(String name) {
-                this.name = name;
-        }
+    @Column(nullable = false)
+    public Double getPrice() {
+        return price;
+    }
 
-        public Double getPrice() {
-                return price;
-        }
+    public void setPrice(Double price) {
+        this.price = price;
+    }
 
-        public void setPrice(Double price) {
-                this.price = price;
-        }
+    @Column(nullable = false)
+    public Integer getQuantity() {
+        return quantity;
+    }
 
-        public Integer getQuantity() {
-                return quantity;
-        }
-
-        public void setQuantity(Integer quantity) {
-                this.quantity = quantity;
-        }
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
 }

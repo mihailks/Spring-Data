@@ -17,6 +17,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -58,7 +59,7 @@ public class EmployeeServiceImpl implements EmployeeService {
                 .filter(employeeSeedDTO -> {
                     boolean isValid = validationUtil.isValid(employeeSeedDTO);
                     Optional<Employee> byNumber = this.employeeRepository.findByCard_Number(employeeSeedDTO.getCard());
-                    if (byNumber.isEmpty()) {
+                    if (!byNumber.isEmpty()) {
                         isValid = false;
                     }
 
@@ -72,7 +73,7 @@ public class EmployeeServiceImpl implements EmployeeService {
                 })
                 .map(employeeSeedDTO -> {
                     Employee employee = modelMapper.map(employeeSeedDTO, Employee.class);
-                    employee.setCard(employeeCardService.findByCardNumber(employeeSeedDTO.getCard()).orElse(null));
+                    employee.setCard(employeeCardService.findByNumber(employeeSeedDTO.getCard()).orElse(null));
                     employee.setBranch(branchService.findByName(employeeSeedDTO.getBranch()));
                     return employee;
                 })
@@ -84,7 +85,23 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public String exportProductiveEmployees() {
-        return null;
+        StringBuilder stringBuilder = new StringBuilder();
+
+
+        List<Employee> employees = employeeRepository.findAllByBranchWithMoreThenOneProduct();
+
+        employees
+                .forEach(e -> {
+                    stringBuilder.append(String.format("Name: %s %s%n" +
+                                    "Position: %s%n" +
+                                    "Card Number: %s%n" +
+                                    ".............................%n",
+                            e.getFirstName(),
+                            e.getLastName(),
+                            e.getPosition(),
+                            e.getCard().getNumber()));
+                });
+        return stringBuilder.toString().trim();
     }
 }
 

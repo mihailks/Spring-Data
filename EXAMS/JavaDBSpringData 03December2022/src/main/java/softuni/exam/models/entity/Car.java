@@ -1,7 +1,6 @@
 package softuni.exam.models.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "cars")
@@ -16,17 +15,8 @@ public class Car extends BaseEntity{
 
     public Car() {
     }
-
-    public Car(CarType carType, String carMake, String carModel, Integer year, String plateNumber, Integer kilometers, Double engine) {
-        this.carType = carType;
-        this.carMake = carMake;
-        this.carModel = carModel;
-        this.year = year;
-        this.plateNumber = plateNumber;
-        this.kilometers = kilometers;
-        this.engine = engine;
-    }
-
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     public CarType getCarType() {
         return carType;
     }
@@ -35,6 +25,7 @@ public class Car extends BaseEntity{
         this.carType = carType;
     }
 
+    @Column(nullable = false)
     public String getCarMake() {
         return carMake;
     }
@@ -42,7 +33,7 @@ public class Car extends BaseEntity{
     public void setCarMake(String carMake) {
         this.carMake = carMake;
     }
-
+    @Column(nullable = false)
     public String getCarModel() {
         return carModel;
     }
@@ -50,7 +41,7 @@ public class Car extends BaseEntity{
     public void setCarModel(String carModel) {
         this.carModel = carModel;
     }
-
+    @Column(nullable = false)
     public Integer getYear() {
         return year;
     }
@@ -58,7 +49,7 @@ public class Car extends BaseEntity{
     public void setYear(Integer year) {
         this.year = year;
     }
-
+    @Column(nullable = false, unique = true)
     public String getPlateNumber() {
         return plateNumber;
     }
@@ -66,7 +57,7 @@ public class Car extends BaseEntity{
     public void setPlateNumber(String plateNumber) {
         this.plateNumber = plateNumber;
     }
-
+    @Column(nullable = false)
     public Integer getKilometers() {
         return kilometers;
     }
@@ -74,7 +65,7 @@ public class Car extends BaseEntity{
     public void setKilometers(Integer kilometers) {
         this.kilometers = kilometers;
     }
-
+    @Column(nullable = false)
     public Double getEngine() {
         return engine;
     }

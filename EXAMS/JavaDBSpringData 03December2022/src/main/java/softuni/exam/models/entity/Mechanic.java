@@ -1,5 +1,6 @@
 package softuni.exam.models.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
@@ -13,14 +14,7 @@ public class Mechanic extends BaseEntity {
 
     public Mechanic() {
     }
-
-    public Mechanic(String firstName, String lastName, String email, String phone) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.phone = phone;
-    }
-
+    @Column(nullable = false, unique = true)
     public String getFirstName() {
         return firstName;
     }
@@ -28,7 +22,7 @@ public class Mechanic extends BaseEntity {
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
-
+    @Column(nullable = false)
     public String getLastName() {
         return lastName;
     }
@@ -36,7 +30,7 @@ public class Mechanic extends BaseEntity {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
-
+    @Column(nullable = false, unique = true)
     public String getEmail() {
         return email;
     }
@@ -44,7 +38,7 @@ public class Mechanic extends BaseEntity {
     public void setEmail(String email) {
         this.email = email;
     }
-
+    @Column(unique = true)
     public String getPhone() {
         return phone;
     }

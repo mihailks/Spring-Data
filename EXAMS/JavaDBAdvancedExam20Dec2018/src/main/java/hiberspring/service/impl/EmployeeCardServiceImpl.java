@@ -46,8 +46,6 @@ public class EmployeeCardServiceImpl implements EmployeeCardService {
     public String importEmployeeCards(String employeeCardsFileContent) throws IOException {
         StringBuilder stringBuilder = new StringBuilder();
 
-        EmployeeCardSeedDTO[] employeeCardSeedDTOs = gson.fromJson(readEmployeeCardsJsonFile(), EmployeeCardSeedDTO[].class);
-
         Arrays.stream(gson.fromJson(readEmployeeCardsJsonFile(), EmployeeCardSeedDTO[].class))
                 .filter(employeeCardSeedDTO -> {
                     boolean isValid = validationUtil.isValid(employeeCardSeedDTO);
