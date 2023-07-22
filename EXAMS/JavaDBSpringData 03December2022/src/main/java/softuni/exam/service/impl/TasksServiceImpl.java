@@ -4,6 +4,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import softuni.exam.models.dto.TaskSeedDTO;
 import softuni.exam.models.dto.TaskSeedRootDTO;
+import softuni.exam.models.entity.CarType;
 import softuni.exam.models.entity.Mechanic;
 import softuni.exam.models.entity.Task;
 import softuni.exam.repository.TasksRepository;
@@ -20,7 +21,10 @@ import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
+
+import static java.math.BigDecimal.ROUND_HALF_UP;
 
 @Service
 public class TasksServiceImpl implements TasksService {
@@ -79,8 +83,8 @@ public class TasksServiceImpl implements TasksService {
 
 
             BigDecimal formatBD = new BigDecimal(String.valueOf(task.getPrice()));
-            formatBD.setScale(2, BigDecimal.ROUND_HALF_UP); // this does change bd
-            formatBD = formatBD.setScale(2, BigDecimal.ROUND_HALF_UP);
+            formatBD.setScale(2, ROUND_HALF_UP); // this does change bd
+            formatBD = formatBD.setScale(2, ROUND_HALF_UP);
 
 
             stringBuilder.append(String.format("Successfully imported task %s", formatBD));
@@ -93,6 +97,45 @@ public class TasksServiceImpl implements TasksService {
 
     @Override
     public String getCoupeCarTasksOrderByPrice() {
-        return null;
+        List<Task> tasks = tasksRepository.findAllByCar_CarTypeOrderByPriceDesc(CarType.coupe);
+        StringBuilder stringBuilder = new StringBuilder();
+        Locale.setDefault(new Locale("en", "US"));
+        for (Task task : tasks) {
+
+
+
+            stringBuilder.append(String.format("Car %s %s with %skm\n" +
+                    "-Mechanic: %s %s - task №%d:\n" +
+                    " --Engine: %.1f\n" +
+                    "---Price: %.2f$\n",
+                            task.getCar().getCarMake(),
+                            task.getCar().getCarModel(),
+                            task.getCar().getKilometers(),
+                    task.getMechanic().getFirstName(),
+                    task.getMechanic().getLastName(),
+                    task.getId(),
+                    task.getCar().getEngine(),
+                    task.getPrice().setScale(2)));
+
+
+
+        }
+
+
+        return stringBuilder.toString().trim();
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
