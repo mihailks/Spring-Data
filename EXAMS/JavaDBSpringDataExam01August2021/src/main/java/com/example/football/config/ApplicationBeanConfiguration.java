@@ -1,4 +1,4 @@
-package softuni.exam.config;
+package com.example.football.config;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -37,15 +37,12 @@ public class ApplicationBeanConfiguration {
         });
 
 
-
-
         modelMapper.addConverter(new Converter<String, LocalTime>() {
             @Override
             public LocalTime convert(MappingContext<String, LocalTime> mappingContext) {
                 return LocalTime.parse(mappingContext.getSource(), DateTimeFormatter.ofPattern("HH:mm:ss"));
             }
         });
-
 
 
         modelMapper.addConverter(new Converter<String, LocalDate>() {
@@ -60,3 +57,4 @@ public class ApplicationBeanConfiguration {
         return modelMapper;
     }
 }
+
