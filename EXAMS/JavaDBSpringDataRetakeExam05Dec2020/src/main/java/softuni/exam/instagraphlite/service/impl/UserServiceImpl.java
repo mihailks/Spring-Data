@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -87,7 +88,10 @@ public class UserServiceImpl implements UserService {
                             "Post count: %d%n",
                             user.getUsername(),user.getPosts().size()));
 
-            user.getPosts().forEach(post -> {
+            user.getPosts()
+                    .stream()
+                    .sorted(Comparator.comparingDouble(l -> l.getPicture().getSize()))
+                    .forEach(post -> {
                 stringBuilder.append(String.format(
                                 "==Post Details:%n" +
                                 "----Caption: %s%n" +
