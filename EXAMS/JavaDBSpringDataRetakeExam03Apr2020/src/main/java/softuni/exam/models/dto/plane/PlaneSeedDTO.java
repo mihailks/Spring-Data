@@ -10,7 +10,7 @@ import javax.xml.bind.annotation.XmlElement;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class PlaneSeedDTO {
 
-    @XmlElement(name = "registerNumber")
+    @XmlElement(name = "register-number")
     private String registerNumber;
     @XmlElement(name = "capacity")
     private Integer capacity;

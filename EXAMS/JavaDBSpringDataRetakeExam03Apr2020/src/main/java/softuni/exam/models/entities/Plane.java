@@ -2,7 +2,9 @@ package softuni.exam.models.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import java.util.List;
 
 @Entity
 @Table(name = "planes")
@@ -14,7 +16,7 @@ public class Plane extends BaseEntity {
     public Plane() {
     }
 
-    @Column(name = "register_number")
+    @Column(name = "register_number",unique = true)
     public String getRegisterNumber() {
         return registerNumber;
     }
@@ -40,4 +42,5 @@ public class Plane extends BaseEntity {
     public void setAirline(String airline) {
         this.airline = airline;
     }
+
 }

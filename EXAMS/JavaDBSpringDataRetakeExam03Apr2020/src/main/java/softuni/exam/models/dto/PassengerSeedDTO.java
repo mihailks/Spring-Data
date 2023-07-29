@@ -1,24 +1,30 @@
-package softuni.exam.models.entities;
+package softuni.exam.models.dto;
 
-import javax.persistence.*;
-import java.util.List;
-import java.util.Set;
+import com.google.gson.annotations.Expose;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.Size;
 
-@Entity
-@Table(name = "passengers")
-public class Passenger extends BaseEntity {
+public class PassengerSeedDTO {
+    @Expose
     private String firstName;
+    @Expose
     private String lastName;
+    @Expose
     private Integer age;
+    @Expose
     private String phoneNumber;
+    @Expose
     private String email;
-    private Town town;
-    private Set<Ticket> tickets;
-    public Passenger() {
-    }
+    @Expose
+    private String town;
 
-    @Column(name = "first_name")
+    public PassengerSeedDTO() {
+    }
+    @NotNull
+    @Size(min = 2)
     public String getFirstName() {
         return firstName;
     }
@@ -26,8 +32,8 @@ public class Passenger extends BaseEntity {
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
-
-    @Column(name = "last_name")
+    @NotNull
+    @Size(min = 2)
     public String getLastName() {
         return lastName;
     }
@@ -35,8 +41,8 @@ public class Passenger extends BaseEntity {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
-
-    @Column(name = "age")
+    @NotNull
+    @Positive
     public Integer getAge() {
         return age;
     }
@@ -44,8 +50,7 @@ public class Passenger extends BaseEntity {
     public void setAge(Integer age) {
         this.age = age;
     }
-
-    @Column(name = "phone_number")
+    @NotNull
     public String getPhoneNumber() {
         return phoneNumber;
     }
@@ -53,8 +58,8 @@ public class Passenger extends BaseEntity {
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
-
-    @Column(name = "email", unique = true)
+    @NotNull
+    @Email
     public String getEmail() {
         return email;
     }
@@ -62,22 +67,12 @@ public class Passenger extends BaseEntity {
     public void setEmail(String email) {
         this.email = email;
     }
-
-    @ManyToOne
-    public Town getTown() {
+    @NotNull
+    public String getTown() {
         return town;
     }
 
-    public void setTown(Town town) {
+    public void setTown(String town) {
         this.town = town;
-    }
-
-    @OneToMany(mappedBy = "passenger")
-    public Set<Ticket> getTickets() {
-        return tickets;
-    }
-
-    public void setTickets(Set<Ticket> tickets) {
-        this.tickets = tickets;
     }
 }

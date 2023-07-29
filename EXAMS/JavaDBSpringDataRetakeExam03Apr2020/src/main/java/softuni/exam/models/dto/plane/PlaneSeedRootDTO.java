@@ -10,7 +10,7 @@ import java.util.List;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class PlaneSeedRootDTO {
 
-    @XmlElement(name = "name")
+    @XmlElement(name = "plane")
     private List<PlaneSeedDTO> planes;
 
     public PlaneSeedRootDTO() {

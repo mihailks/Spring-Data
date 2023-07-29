@@ -2,11 +2,16 @@ package softuni.exam.service.impl;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import softuni.exam.models.dto.plane.PlaneSeedDTO;
+import softuni.exam.models.dto.plane.PlaneSeedRootDTO;
+import softuni.exam.models.entities.Plane;
 import softuni.exam.repository.PlaneRepository;
 import softuni.exam.service.PlaneService;
 import softuni.exam.util.ValidationUtil;
 import softuni.exam.util.XmlParser;
 
+import javax.xml.bind.JAXBException;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -37,9 +42,27 @@ public class PlaneServiceImpl implements PlaneService {
     }
 
     @Override
-    public String importPlanes() {
+    public String importPlanes() throws JAXBException, FileNotFoundException {
         StringBuilder stringBuilder = new StringBuilder();
 
+
+        PlaneSeedRootDTO planeSeedRootDTO = xmlParser.fromFile(PLANES_FILE_PATH, PlaneSeedRootDTO.class);
+
+        xmlParser.fromFile(PLANES_FILE_PATH, PlaneSeedRootDTO.class)
+                .getPlanes()
+                .stream()
+                .filter(planeSeedDTO -> {
+                    boolean isValid = validationUtil.isValid(planeSeedDTO)
+                            && planeRepository.findByRegisterNumber(planeSeedDTO.getRegisterNumber()).isEmpty();
+
+                    stringBuilder.append(isValid
+                    ? String.format("Successfully imported Plane %s", planeSeedDTO.getRegisterNumber())
+                            : "Invalid Plane")
+                            .append(System.lineSeparator());
+                    return isValid;
+                })
+                .map(planeSeedDTO -> modelMapper.map(planeSeedDTO, Plane.class))
+                .forEach(planeRepository::save);
 
 
         return stringBuilder.toString().trim();
